@@ -16,14 +16,11 @@ The Golden Tune Jukebox includes:
 - A **USB speaker**
 - A fully **3D-printed enclosure** designed for this project
 
-The project is split into **three main parts**:  
-software, electronics, and physical assembly.
+The project is split into **three main parts**: software, electronics, and physical assembly.
 
 ---
 
 ## 📂 Repository Structure
-
-Use the links below to access each part of the project:
 
 ### 🧠 1) Software & Scripts
 👉 **`Golden Tune Jukebox — Script.md`**  
