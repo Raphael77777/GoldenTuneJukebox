@@ -60,7 +60,7 @@ The enclosure, brackets and internal mounts are **fully custom designed** and sh
 - STL files, print orientation and notes provided on MakerWorld
 
 ➡️ **Download the 3D files here:**  
-🔗 **[Golden Tune Jukebox – MakerWorld](PUT_YOUR_MAKERWORLD_LINK_HERE)**
+🔗 **[Golden Tune Jukebox – MakerWorld](https://makerworld.com/models/2131909)**
 
 ---
 
