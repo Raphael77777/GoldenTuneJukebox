@@ -1,0 +1,14 @@
+[Unit]
+Description=Power Switch Listener (GPIO13)
+After=multi-user.target
+
+[Service]
+Type=simple
+WorkingDirectory=/run
+ExecStart=/usr/bin/python3 /home/user/jukebox/power_switch.py
+Restart=always
+RestartSec=2
+User=root
+
+[Install]
+WantedBy=multi-user.target

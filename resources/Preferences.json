@@ -1,0 +1,12 @@
+{
+  "translate": {
+    "enabled": false
+  },
+  "intl": {
+    "accept_languages": "en-US,en",
+    "selected_languages": "en-US,en"
+  },
+  "browser": {
+    "enable_spellchecking": false
+  }
+}

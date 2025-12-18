@@ -1,0 +1,16 @@
+[Unit]
+Description=Jukebox LED Show
+After=network.target
+After=raspotify.service
+Wants=raspotify.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/user/jukebox
+ExecStart=/home/user/jukebox/.venv/bin/python /home/user/jukebox/led_fullshow.py
+Restart=always
+RestartSec=1
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=Set volume at boot (pactl)
+After=default.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/pactl set-sink-volume @DEFAULT_SINK@ 50%
+ExecStart=/usr/bin/pactl set-sink-mute @DEFAULT_SINK@ 0
+
+[Install]
+WantedBy=default.target

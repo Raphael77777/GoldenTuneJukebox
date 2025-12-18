@@ -1,0 +1,14 @@
+[Unit]
+Description=Jukebox rotary encoder (volume)
+After=pipewire.service pipewire-pulse.service
+Wants=pipewire.service pipewire-pulse.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/user/jukebox
+ExecStart=/usr/bin/python3 /home/user/jukebox/volume_decoder.py
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=default.target

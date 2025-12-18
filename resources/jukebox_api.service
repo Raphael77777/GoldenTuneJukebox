@@ -1,0 +1,15 @@
+[Unit]
+Description=Jukebox Now Playing API (Spotify)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=user
+WorkingDirectory=/home/user/nowplaying
+ExecStart=/home/user/nowplaying/.venv/bin/python /home/user/nowplaying/app.py
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
