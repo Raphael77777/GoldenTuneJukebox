@@ -1,7 +1,6 @@
 # 🎶 Golden Tune Jukebox
 
-**Golden Tune** is a DIY connected jukebox project built around a Raspberry Pi, addressable LEDs and a custom 3D-printed enclosure.  
-It combines **hardware, software and 3D design** to create a retro-inspired jukebox with a modern twist.
+**Golden Tune** is a DIY connected jukebox project built around a Raspberry Pi, addressable LEDs and a custom 3D-printed enclosure. It combines **hardware, software and 3D design** to create a retro-inspired jukebox with a modern twist.
 
 This repository contains **all the technical documentation** needed to understand, build and customize the project.
 
@@ -27,7 +26,7 @@ software, electronics, and physical assembly.
 Use the links below to access each part of the project:
 
 ### 🧠 1) Software & Scripts
-👉 **[`Golden Tune Jukebox — Script.md`](./Golden Tune Jukebox — Script.md)**  
+👉 **`Golden Tune Jukebox — Script.md`**  
 Contains:
 - Python scripts
 - LED animations
@@ -37,7 +36,7 @@ Contains:
 ---
 
 ### 🛒 2) Bill of Materials (BOM)
-👉 **[`Golden Tune Jukebox – Parts & Components.md`](./Golden Tune Jukebox – Parts & Components.md)**  
+👉 **`Golden Tune Jukebox – Parts & Components.md`**  
 Contains:
 - Full list of components to buy
 - Electronics, wiring, connectors
@@ -46,7 +45,7 @@ Contains:
 ---
 
 ### 🔌 3) Wiring, Electronics & Assembly
-👉 **[`/Golden Tune Jukebox — Wiring.md`](./Golden Tune Jukebox — Wiring.md)**  
+👉 **`/Golden Tune Jukebox — Wiring.md`**  
 Contains:
 - Power distribution diagrams
 - GPIO pin mapping
