@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Golden Tune Jukebox</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg"></div>
+
+  <header class="top">
+    <div class="marquee">
+      <div class="marquee__inner" id="mqt">
+        ★ GOLDEN TUNE ★ NOW PLAYING ★ GOLDEN TUNE ★ NOW PLAYING ★ GOLDEN TUNE ★ NOW PLAYING ★
+      </div>
+    </div>
+  </header>
+
+  <main class="stage">
+    <section class="cabinet">
+      <div class="neon-frame">
+        <div class="brand">
+          <div class="brand__title" data-text="GOLDEN TUNE">GOLDEN <span>TUNE</span></div>
+          <div class="brand__tag">JUKEBOX • SPOTIFY CONNECT</div>
+        </div>
+
+        <div class="screen">
+          <div class="left">
+            <div class="vinyl-wrap">
+              <div class="vinyl">
+                <img id="cover" class="label" alt="">
+              </div>
+              <div class="shine"></div>
+            </div>
+          </div>
+
+          <div class="right">
+            <div class="meta">
+              <div class="title-wrap" id="titleWrap">
+                <div class="title" id="title">—</div>
+              </div>
+              <div class="artist" id="artist">—</div>
+            </div>
+
+            <div class="progress">
+              <div class="bar"><div class="fill" id="fill"></div></div>
+              <div class="time">
+                <span id="cur">0:00</span>
+                <span id="dur">0:00</span>
+              </div>
+            </div>
+
+            <div class="status-row">
+              <div class="lamp" id="lamp"></div>
+              <div class="status" id="status">En attente…</div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="bottom">
+          <div class="badge">GOLDEN TUNE - JUKEBOX</div>
+          <div class="eq" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="badge">EST. 2026</div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <footer class="down">
+    <div class="marquee">
+      <div class="marquee__inner" id="mqd">
+        ★ GOLDEN TUNE ★ NOW PLAYING ★ GOLDEN TUNE ★ NOW PLAYING ★ GOLDEN TUNE ★ NOW PLAYING ★
+      </div>
+    </div>
+  </footer>
+
+<script>
+const el = (id) => document.getElementById(id);
+
+const fmt = (ms) => {
+  ms = Math.max(0, ms|0);
+  const s = Math.floor(ms/1000);
+  const m = Math.floor(s/60);
+  const r = s%60;
+  return `${m}:${String(r).padStart(2,'0')}`;
+};
+
+let lastCover = null;
+let lastTitle = "";
+
+function setPlaying(isPlaying){
+  document.body.classList.toggle("is-playing", !!isPlaying);
+  el("lamp").classList.toggle("lamp--on", !!isPlaying);
+}
+
+let _lastMarqueeTitle = null;
+
+function updateTitleMarquee(force=false){
+  const t = document.getElementById("title");
+  const wrap = document.getElementById("titleWrap");
+  if(!t || !wrap) return;
+
+  const txt = t.textContent || "";
+  if(!force && txt === _lastMarqueeTitle) return; // ✅ ne pas relancer sans changement
+  _lastMarqueeTitle = txt;
+
+  // reset (une fois quand le titre change)
+  t.classList.remove("is-scroll");
+  t.style.removeProperty("--titleShift");
+  t.style.removeProperty("--titleDur");
+
+  requestAnimationFrame(() => {
+    const wrapW = wrap.clientWidth;
+    const textW = t.scrollWidth;
+    const overflow = textW - wrapW;
+
+    if (overflow > 2) {
+      t.classList.add("is-scroll");
+      t.style.setProperty("--titleShift", `${overflow}px`);
+
+      const seconds = overflow / 55; // ~55px/s
+      t.style.setProperty("--titleDur", `${Math.max(10, Math.min(28, seconds))}s`);
+    }
+  });
+}
+
+// ✅ recalcul si rotation écran / resize
+window.addEventListener("resize", () => updateTitleMarquee(true));
+
+async function tick(){
+  try{
+    const r = await fetch('/api/now', {cache:'no-store'});
+    const d = await r.json();
+
+    const title = d.name || '—';
+    const artists = d.artists || '—';
+
+    el('title').textContent = title;
+    el('artist').textContent = artists;
+    if(!d.is_playing){
+      setPlaying(false);
+      el('status').textContent = 'Pause';
+      updateTitleMarquee(true);
+      return
+    }
+    else
+    {
+      setPlaying(true);
+      updateTitleMarquee();
+    }
+
+    el('status').textContent = `En lecture`.trim();
+
+    if(d.cover && d.cover !== lastCover){
+      el('cover').src = d.cover;
+      lastCover = d.cover;
+    }
+
+    const pct = d.duration_ms ? (d.progress_ms / d.duration_ms) * 100 : 0;
+    el('fill').style.width = `${Math.min(100, Math.max(0, pct))}%`;
+    el('cur').textContent = fmt(d.progress_ms);
+    el('dur').textContent = fmt(d.duration_ms);
+
+    // Marquee dynamique (optionnel, mais cool)
+    const mq = `★ ${title.toUpperCase()} ★ ${artists.toUpperCase()} `;
+    if(mq !== lastTitle){
+      el("mqt").textContent = (mq.repeat(12));
+      el("mqd").textContent = (mq.repeat(12));
+      lastTitle = mq;
+    }
+  }catch(e){
+    setPlaying(false);
+    el('status').textContent = 'API indisponible';
+  }
+}
+
+tick();
+setInterval(tick, 700);
+</script>
+</body>
+</html>
